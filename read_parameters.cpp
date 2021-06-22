@@ -207,7 +207,7 @@ bool readParameters(SampleParameters & sample1, SampleParameters & sample2, Samp
             return false;
         }
 
-        std::cout << "Parameters file was read correctly.\n";
+        std::cout << "Parameters file at path: \"" + pathToFile + "\" was read correctly.\n";
         std::cout << "Front sample\n";
         std::cout << sample1 << "\n";
         std::cout << "Middle sample\n";
