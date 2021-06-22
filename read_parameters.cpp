@@ -1,6 +1,7 @@
 
 #include "read_parameters.h"
 
+#include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
@@ -105,13 +106,27 @@ bool verifyParameters(const SampleParameters & sample1,
     return true;
 }
 
+std::string getParametersFilePath()
+{
+    auto currentFile = std::string(__FILE__);
+
+    auto pos = currentFile.rfind('\\');
+    if (pos == std::string::npos)
+    {
+        pos = currentFile.rfind('/');
+    }
+
+    currentFile.erase(pos);
+    return currentFile + "/parameters.txt";
+}
+
 } // namespace details
 
 bool readParameters(SampleParameters & sample1, SampleParameters & sample2, SampleParameters & sample3,double & t12)
 {
     try
     {
-        static const std::string pathToFile{ "../../parameters.txt" };
+        static const std::string pathToFile = details::getParametersFilePath();
         std::ifstream inputFile{ pathToFile };
         if (!inputFile)
         {
