@@ -4,10 +4,12 @@
 #include <cmath>
 #include <ostream>
 
+#include "import.h"
+
 namespace tls
 {
 
-struct SampleParameters
+struct TLS_API SampleParameters
 {
     double l;     /*! length        of the sample measured in [cm] */
     double rho;   /*! density       of the sample measured in [g / cm^3] */
@@ -21,7 +23,7 @@ struct SampleParameters
  * @param sampleParameters sample parameters for which thermal conductivity is calculated
  * @return thermal conductivity of the sample measured in w / cm / K
  */
-inline double getThermalConductivity(const SampleParameters & sampleParameters)
+TLS_API inline double getThermalConductivity(const SampleParameters sampleParameters)
 {
     return sampleParameters.alpha * sampleParameters.rho * sampleParameters.c;
 }
@@ -33,7 +35,7 @@ inline double getThermalConductivity(const SampleParameters & sampleParameters)
  * @param sampleParameters sample parameters for which squared root of heat diffusion time is calculated
  * @return squared root of heat diffusion time measured in sec ^ 0.5 
  */
-inline double getEtta(const SampleParameters & sampleParameters)
+TLS_API inline double getEtta(const SampleParameters sampleParameters)
 {
     return std::sqrt(sampleParameters.l * sampleParameters.l / sampleParameters.alpha);
 }
@@ -45,7 +47,7 @@ inline double getEtta(const SampleParameters & sampleParameters)
  * @param sampleParameters sample parameters for which volumetric heat capacity is calculated
  * @return volumetric heat capacity measured in sec ^ 0.5 
  */
-inline double getH(const SampleParameters & sampleParameters)
+TLS_API inline double getH(const SampleParameters sampleParameters)
 {
     return sampleParameters.rho * sampleParameters.c * sampleParameters.l;
 }

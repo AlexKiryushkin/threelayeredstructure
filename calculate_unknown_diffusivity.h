@@ -1,6 +1,7 @@
 
 #pragma once
 
+#include "import.h"
 #include "sample_parameters.h"
 
 namespace tls
@@ -15,10 +16,10 @@ namespace tls
  * @param t12 halftime
  * @return unknown diffusivity
  */
-double calculateUnknownDiffusivity(const tls::SampleParameters & sample1,
-                                   const tls::SampleParameters & sample2,
-                                   const tls::SampleParameters & sample3,
-                                   double t12);
+TLS_API double calculateUnknownDiffusivity(const tls::SampleParameters & sample1,
+                                           const tls::SampleParameters & sample2,
+                                           const tls::SampleParameters & sample3,
+                                           double t12);
 
 
 } // namespace tls
