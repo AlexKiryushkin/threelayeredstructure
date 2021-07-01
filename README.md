@@ -8,7 +8,7 @@ To build this project you need a compiler that support C++14 standard. To build 
 	
 	$ git clone https://github.com/AlexKiryushkin/threelayeredstructure
 	$ cd threelayeredstructure
-	$ mkdir build && cd build && cmake ..
+	$ mkdir build && cd build && cmake -A Win32 ..
 	$ cmake --build ./
 
 ## Run

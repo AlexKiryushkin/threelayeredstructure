@@ -3,9 +3,6 @@
 
 #include "sample_parameters.h"
 
-namespace tls
-{
-
 /**
  * @brief Read parameters
  * 
@@ -27,5 +24,3 @@ bool readParameters(SampleParameters & sample1, SampleParameters & sample2, Samp
  * @param t12 reference to halftime
  */
 void runIntercative(SampleParameters & sample1, SampleParameters & sample2, SampleParameters & sample3, double & t12);
-
-} // namespace tls

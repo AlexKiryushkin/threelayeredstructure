@@ -107,20 +107,20 @@ double getNormalizedTemperature(double H12, double H13, double H23, double etta1
 
 double findAlpha2()
 {
-    auto sample1 = tls::SampleParameters{ 0.0188, 8.96, 0.385, 1.1086 };
-    const auto lambda1 = tls::getThermalConductivity(sample1);
-    const auto etta1 = tls::getEtta(sample1);
-    const auto H1 = tls::getH(sample1);
+    auto sample1 = SampleParameters{ 0.0188, 8.96, 0.385, 1.1086 };
+    const auto lambda1 = getThermalConductivity(sample1);
+    const auto etta1 = getEtta(sample1);
+    const auto H1 = getH(sample1);
 
     constexpr double l2 = 0.0163;
     constexpr double rho2 = 5.33;
     constexpr double c2 = 0.4405;
     const auto H2 = rho2 * c2 * l2;
 
-    auto sample3 = tls::SampleParameters{ 0.0188, 8.96, 0.385, 1.1086 };
-    const auto lambda3 = tls::getThermalConductivity(sample3);
-    const auto etta3 = tls::getEtta(sample3);
-    const auto H3 = tls::getH(sample3);
+    auto sample3 = SampleParameters{ 0.0188, 8.96, 0.385, 1.1086 };
+    const auto lambda3 = getThermalConductivity(sample3);
+    const auto etta3 = getEtta(sample3);
+    const auto H3 = getH(sample3);
 
     const auto H12 = H1 / H2;
     const auto H13 = H1 / H3;
@@ -142,19 +142,19 @@ double findAlpha2()
     }
 }
 
-double calculateNormalizedTemperature(const tls::SampleParameters & sample1,
-                                      const tls::SampleParameters & sample2,
-                                      const tls::SampleParameters & sample3,
+double calculateNormalizedTemperature(const SampleParameters & sample1,
+                                      const SampleParameters & sample2,
+                                      const SampleParameters & sample3,
                                       double t12)
 {
-    const auto etta1 = tls::getEtta(sample1);
-    const auto H1 = tls::getH(sample1);
+    const auto etta1 = getEtta(sample1);
+    const auto H1 = getH(sample1);
 
-    const auto etta2 = tls::getEtta(sample2);
-    const auto H2 = tls::getH(sample2);
+    const auto etta2 = getEtta(sample2);
+    const auto H2 = getH(sample2);
 
-    const auto etta3 = tls::getEtta(sample3);
-    const auto H3 = tls::getH(sample3);
+    const auto etta3 = getEtta(sample3);
+    const auto H3 = getH(sample3);
     
     const auto H12 = H1 / H2;
     const auto H13 = H1 / H3;
@@ -171,18 +171,21 @@ int main()
 {
     try
     {
-        auto sample1 = tls::SampleParameters{ };
-        auto sample2 = tls::SampleParameters{ };
-        auto sample3 = tls::SampleParameters{ };
+        auto sample1 = SampleParameters{ };
+        auto sample2 = SampleParameters{ };
+        auto sample3 = SampleParameters{ };
         auto t12     = double{};
         std::string parameterStr;
-        if ( false == tls::readParameters(sample1, sample2, sample3, t12) )
+        if ( false == readParameters(sample1, sample2, sample3, t12) )
         {
-            tls::runIntercative(sample1, sample2, sample3, t12);
+            runIntercative(sample1, sample2, sample3, t12);
         }
 
         std::cout << "=============================================\n";
-        const auto unknownDiffusity = tls::calculateUnknownDiffusivity(sample1, sample2, sample3, t12);
+        const auto unknownDiffusity = calculateUnknownDiffusivity(
+            sample1.l, sample1.rho, sample1.c, sample1.alpha,
+            sample2.l, sample2.rho, sample2.c, sample2.alpha,
+            sample3.l, sample3.rho, sample3.c, sample3.alpha, t12);
         std::cout << "Unknown thermal diffusivity is: " << unknownDiffusity << std::endl;
     }
     catch(const std::exception& e)

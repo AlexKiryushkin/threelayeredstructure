@@ -1,13 +1,10 @@
 
-#include "calculate_unknown_diffusivity.h"
+#include "pch.h"
 
 #include <cmath>
 #include <iostream>
 #include <stdexcept>
 #include <vector>
-
-namespace tls
-{
 
 namespace detail
 {
@@ -135,19 +132,19 @@ double getNormalizedTemperature(double H12, double H13, double H23, double etta1
  * @brief Calculates the normalized temperature for given parameters according to the formula from:
  * Lee, H.J., "Thermal Diffusivity in Layered and Dispersed Composites," Ph.D. Thesis, Purdue University, 1975. 
  */
-double calculateNormalizedTemperature(const tls::SampleParameters & sample1,
-                                      const tls::SampleParameters & sample2,
-                                      const tls::SampleParameters & sample3,
+double calculateNormalizedTemperature(const SampleParameters & sample1,
+                                      const SampleParameters & sample2,
+                                      const SampleParameters & sample3,
                                       double t12)
 {
-    const auto etta1 = tls::getEtta(sample1);
-    const auto H1 = tls::getH(sample1);
+    const auto etta1 = getEtta(sample1);
+    const auto H1 = getH(sample1);
 
-    const auto etta2 = tls::getEtta(sample2);
-    const auto H2 = tls::getH(sample2);
+    const auto etta2 = getEtta(sample2);
+    const auto H2 = getH(sample2);
 
-    const auto etta3 = tls::getEtta(sample3);
-    const auto H3 = tls::getH(sample3);
+    const auto etta3 = getEtta(sample3);
+    const auto H3 = getH(sample3);
     
     const auto H12 = H1 / H2;
     const auto H13 = H1 / H3;
@@ -162,9 +159,9 @@ double calculateNormalizedTemperature(const tls::SampleParameters & sample1,
 
 } // namespace detail
 
-double calculateUnknownDiffusivity(const tls::SampleParameters & sample1,
-                                   const tls::SampleParameters & sample2,
-                                   const tls::SampleParameters & sample3,
+double calculateUnknownDiffusivity(const SampleParameters sample1,
+                                   const SampleParameters sample2,
+                                   const SampleParameters sample3,
                                    double t12)
 {
     constexpr auto eps = 1e-7;
@@ -304,5 +301,13 @@ double calculateUnknownDiffusivity(const tls::SampleParameters & sample1,
     }
 }
 
-
-} // namespace tls
+double calculateUnknownDiffusivity(double l1, double rho1, double c1, double alpha1,
+                                   double l2, double rho2, double c2, double alpha2,
+                                   double l3, double rho3, double c3, double alpha3,
+                                   double t12)
+{
+    return calculateUnknownDiffusivity( SampleParameters{ l1, rho1, c1, alpha1 },
+                                        SampleParameters{ l2, rho2, c2, alpha2 },
+                                        SampleParameters{ l3, rho3, c3, alpha3 },
+                                        t12 );
+}

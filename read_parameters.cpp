@@ -7,9 +7,6 @@
 #include <stdexcept>
 #include <string>
 
-namespace tls
-{
-
 namespace details
 {
 
@@ -333,5 +330,3 @@ void runIntercative(SampleParameters & sample1, SampleParameters & sample2, Samp
         throw std::runtime_error{ errorString };
     }
 }
-
-} // namespace tls
